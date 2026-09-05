@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"SoD Trainer  --  开启后按 INSERT 呼出菜单"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+{$lua}
+if syntaxcheck then return end
+-- Point SOD_ROOT at the folder holding the .lua modules (trailing separator).
+-- Set it in CE's Lua console beforehand to run from somewhere else.
+SOD_ROOT = SOD_ROOT or [[C:\SoDTrainer\]]
+dofile(SOD_ROOT .. "sod_menu.lua")
+print(MENU.open())
+print("[SoD] INSERT = menu, END = ESP")
+[DISABLE]
+{$lua}
+if syntaxcheck then return end
+if MENU and MENU.teardown then
+  MENU.teardown()          -- also drops the hotkeys and removes the hook
+else                       -- fallback for an older set of modules
+  if MENU and MENU.destroy then MENU.destroy() end
+  if ESP and ESP.stop then ESP.stop() end
+  if SOD and SOD.stop then SOD.stop() end
+  if PLAYER and PLAYER.stop then PLAYER.stop() end
+  if AIM and AIM.stop then AIM.stop() end
+end
+print("[SoD] all off")
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+  <LuaScript>local pid = getProcessIDFromProcessName("SoD2-Win64-Shipping.exe")
+if pid then
+  openProcess(pid)
+  print("[SoD] attached to pid " .. pid .. " -- tick the entry above")
+else
+  print("[SoD] game not running yet")
+end
+</LuaScript>
+</CheatTable>

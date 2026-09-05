@@ -1,0 +1,12 @@
+# Cheat Engine leaves these next to a table
+*.CT.bak
+*.ct.bak
+
+# Local experiments and anything machine-specific
+local/
+*.local.lua
+
+# Editors
+.vscode/
+.idea/
+*.swp
