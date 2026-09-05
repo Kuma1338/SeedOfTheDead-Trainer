@@ -1,0 +1,10 @@
+# Keep line endings LF in the repository regardless of who commits from where.
+# Cheat Engine reads either, but a mixed-ending diff is noise nobody wants to
+# review, and Windows contributors are the common case here.
+* text=auto eol=lf
+
+*.lua text eol=lf
+*.ct  text eol=lf
+*.md  text eol=lf
+*.py  text eol=lf
+*.yml text eol=lf
