@@ -10,11 +10,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install Lua and luacheck
+      # Both from apt: this is the combination the checks were verified against.
+      # luarocks needs Lua headers and installs against whichever interpreter it
+      # picks, which is one more thing to go wrong for no benefit here.
+      - name: Install Lua toolchain
         run: |
           sudo apt-get update
-          sudo apt-get install -y lua5.3 luarocks
-          sudo luarocks install luacheck
+          sudo apt-get install -y lua5.3 lua-check
 
       - name: Syntax check
         run: luac5.3 -p src/*.lua
