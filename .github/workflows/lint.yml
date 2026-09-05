@@ -1,0 +1,28 @@
+name: lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lua:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Lua and luacheck
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.3 luarocks
+          sudo luarocks install luacheck
+
+      - name: Syntax check
+        run: luac5.3 -p src/*.lua
+
+      - name: luacheck
+        run: luacheck src
+
+      # luacheck does not know that a Lua local is invisible above its own
+      # declaration when the same name exists as a global. This does.
+      - name: Scope check
+        run: python3 tools/check_scope.py src
